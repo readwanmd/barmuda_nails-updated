@@ -1,0 +1,105 @@
+import { Box, Grid, Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import pictureOne from "../img/jodene-isakowitz-hvqHtZqNMeI-unsplash 1.png";
+import picutreTwo from "../img/giorgio-trovato-gb6gtiTZKB8-unsplash 1.png";
+import pictureThree from "../img/rashid-khreiss-pVw3XzhdKJg-unsplash 1.png";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+export default function ServiceAniBg() {
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+  const animationOne = useAnimation();
+  const animationTwo = useAnimation();
+  const animationThree = useAnimation();
+
+  useEffect(() => {
+    if (inView) {
+      animationOne.start({
+        x: 0,
+        scale: 1,
+        transition: {
+          type: "spring",
+          duration: 5,
+        },
+      });
+      animationTwo.start({
+        y: 0,
+        scale: 1,
+        transition: {
+          type: "spring",
+          duration: 5,
+        },
+      });
+      animationThree.start({
+        x: 0,
+        scale: 1,
+        transition: {
+          type: "spring",
+          duration: 5,
+        },
+      });
+    }
+    if (!inView) {
+      animationOne.start({
+        x: "-100vw",
+        scale: 0,
+      });
+      animationTwo.start({
+        y: "100vw",
+        scale: 0,
+      });
+      animationThree.start({
+        x: "100vw",
+        scale: 0,
+      });
+    }
+  }, [inView, animationOne, animationTwo, animationThree]);
+
+  return (
+    <Grid
+      ref={ref}
+      spacing={7}
+      container
+      justifyContent="center"
+      className="section-service"
+    >
+      <Grid item sm={6} md={4}>
+        <Box>
+          <motion.div animate={animationOne}>
+            <img className="service-picture" src={pictureOne} alt="" />
+            <Typography sx={{ fontSize: "18px", paddingTop: "1em" }}>
+              Lorem ipsum dolor sit amet consectetur. Iaculis rutrum
+              pellentesque mi tempor vitae.
+            </Typography>
+          </motion.div>
+        </Box>
+      </Grid>
+
+      <Grid item sm={6} md={4}>
+        <motion.div animate={animationTwo}>
+          <img className="service-picture" src={picutreTwo} alt="" />
+          <Typography sx={{ fontSize: "18px", paddingTop: "1em" }}>
+            Lorem ipsum dolor sit amet consectetur. Iaculis rutrum pellentesque
+            mi tempor vitae.
+          </Typography>
+        </motion.div>
+      </Grid>
+
+      <Grid item sm={6} md={4}>
+        <motion.div animate={animationThree}>
+          <img className="service-picture" src={pictureThree} alt="" />
+          <Typography
+            className="service-text"
+            sx={{ fontSize: "18px", paddingTop: "1em" }}
+          >
+            Lorem ipsum dolor sit amet consectetur. Iaculis rutrum pellentesque
+            mi tempor vitae.
+          </Typography>
+        </motion.div>
+      </Grid>
+    </Grid>
+  );
+}
